@@ -26,3 +26,6 @@ SetDefaultApp.exe
 
 # Source icon (processed into src-tauri/icons/)
 app-icon.png
+
+# Demo content (for screenshots only)
+demo-content/

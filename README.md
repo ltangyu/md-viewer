@@ -4,6 +4,10 @@ Lightweight desktop Markdown file browser built with **Tauri v2 + Vue 3 + TypeSc
 
 Open a folder, browse all `.md` files in a sidebar, and read beautifully rendered Markdown with syntax-highlighted code blocks and inline images — no Electron, no bloat.
 
+![MD Viewer — file browser with rendered Markdown](screenshots/browser-view.png)
+
+![MD Viewer — code block rendering](screenshots/code-rendering.png)
+
 ---
 
 ## Features
@@ -118,6 +122,10 @@ MIT
 輕量級桌面 Markdown 檔案瀏覽器，使用 **Tauri v2 + Vue 3 + TypeScript** 打造。
 
 打開資料夾，在側邊欄瀏覽所有 `.md` 檔案，閱讀經過精美渲染的 Markdown 內容 — 包含語法高亮的程式碼區塊和內嵌圖片 — 不用 Electron，無多餘開銷。
+
+![MD Viewer — 檔案瀏覽與 Markdown 渲染](screenshots/browser-view.png)
+
+![MD Viewer — 程式碼區塊渲染](screenshots/code-rendering.png)
 
 ---
 

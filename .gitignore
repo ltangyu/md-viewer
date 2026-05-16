@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+src-tauri/target/
+
+# Generated schemas (Tauri auto-generates these)
+src-tauri/gen/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Utility scripts (not part of the app)
+SFTA.ps1
+SetDefaultApp.cs
+SetDefaultApp.exe
+
+# Source icon (processed into src-tauri/icons/)
+app-icon.png

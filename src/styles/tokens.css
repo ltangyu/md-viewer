@@ -1,0 +1,279 @@
+/**
+ * MD Viewer Design Tokens
+ * Adapted from ii/src/styles/tokens.css — R11 monochrome design language
+ */
+
+/* ── Reset ──────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── Design Tokens ──────────────────────────────── */
+:root {
+  /* Background layers */
+  --bg:              #ffffff;
+  --bg-raised:       #fafafa;
+  --surface:         #f8f9fa;
+  --surface-hover:   rgba(0, 0, 0, 0.04);
+  --surface-active:  rgba(0, 0, 0, 0.07);
+
+  /* Foreground */
+  --fg:              #000000;
+  --fg-muted:        #666666;
+  --fg-subtle:       #aaaaaa;
+
+  /* Borders */
+  --border:          rgba(0, 0, 0, 0.10);
+  --border-soft:     rgba(0, 0, 0, 0.05);
+
+  /* Typography */
+  --font-sans:  'Inter', 'Noto Sans TC', system-ui, sans-serif;
+  --font-label: 'Space Grotesk', 'Inter', sans-serif;
+  --font-mono:  'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+
+  /* Radius */
+  --radius-sm:   4px;
+  --radius:      8px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --gap-main: 30px;
+
+  /* Transitions */
+  --trans-fast:   0.15s ease;
+  --trans-normal: 0.22s ease;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+
+  /* Glass */
+  --glass-bg:     rgba(255, 255, 255, 0.70);
+  --glass-blur:   blur(20px);
+  --glass-border: 0.5px solid rgba(0, 0, 0, 0.10);
+
+  /* Layout */
+  --sidebar-width: 280px;
+}
+
+/* ── Base ───────────────────────────────────────── */
+html, body, #app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar (Chromium) ───────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-subtle);
+}
+
+/* ══════════════════════════════════════════════════
+   Markdown Content Styles  (.md-body)
+   ══════════════════════════════════════════════════ */
+
+.md-body {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--fg);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  tab-size: 4;
+}
+
+/* ── Headings ───────────────────────────────────── */
+.md-body h1,
+.md-body h2,
+.md-body h3,
+.md-body h4,
+.md-body h5,
+.md-body h6 {
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.md-body h1 {
+  font-size: 1.75em;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--border-soft);
+}
+.md-body h2 {
+  font-size: 1.4em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--border-soft);
+}
+.md-body h3 { font-size: 1.2em; }
+.md-body h4 { font-size: 1.05em; color: var(--fg-muted); }
+.md-body h5 { font-size: 0.95em; color: var(--fg-muted); }
+.md-body h6 { font-size: 0.88em; color: var(--fg-subtle); }
+
+.md-body > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* ── Paragraph & Text ───────────────────────────── */
+.md-body p {
+  margin-bottom: 1em;
+}
+.md-body strong { font-weight: 600; }
+.md-body a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--fg-subtle);
+  transition: text-decoration-color var(--trans-fast);
+}
+.md-body a:hover {
+  text-decoration-color: var(--fg);
+}
+
+/* ── Lists ──────────────────────────────────────── */
+.md-body ul,
+.md-body ol {
+  margin-bottom: 1em;
+  padding-left: 1.8em;
+}
+.md-body li {
+  margin-bottom: 0.3em;
+}
+.md-body li > ul,
+.md-body li > ol {
+  margin-top: 0.3em;
+  margin-bottom: 0;
+}
+
+/* Task lists */
+.md-body ul.contains-task-list {
+  list-style: none;
+  padding-left: 0.6em;
+}
+.md-body .task-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.md-body .task-list-item input[type="checkbox"] {
+  margin-top: 5px;
+  accent-color: var(--fg);
+}
+
+/* ── Code ───────────────────────────────────────── */
+.md-body code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--surface);
+  border: 0.5px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+}
+.md-body pre {
+  margin-bottom: 1em;
+  background: var(--surface);
+  border: 0.5px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+.md-body pre code {
+  display: block;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+/* ── Tables ─────────────────────────────────────── */
+.md-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  font-size: 0.92em;
+}
+.md-body thead th {
+  background: var(--surface);
+  font-family: var(--font-label);
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fg-muted);
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.md-body tbody td {
+  padding: 10px 14px;
+  border-bottom: 0.5px solid var(--border-soft);
+  vertical-align: top;
+}
+.md-body tbody tr:hover {
+  background: var(--surface-hover);
+}
+
+/* ── Blockquote ─────────────────────────────────── */
+.md-body blockquote {
+  margin: 0 0 1em 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--border);
+  background: var(--surface);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--fg-muted);
+}
+.md-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Horizontal Rule ────────────────────────────── */
+.md-body hr {
+  border: none;
+  border-top: 1px solid var(--border-soft);
+  margin: 2em 0;
+}
+
+/* ── Images ─────────────────────────────────────── */
+.md-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 0.5px solid var(--border-soft);
+  margin: 8px 0;
+}
+
+/* ── Misc ───────────────────────────────────────── */
+.md-body del {
+  color: var(--fg-subtle);
+}
+.md-body mark {
+  background: rgba(250, 204, 21, 0.25);
+  padding: 1px 4px;
+  border-radius: 2px;
+}

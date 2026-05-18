@@ -1,6 +1,7 @@
 /**
  * MD Viewer Design Tokens
- * Adapted from ii/src/styles/tokens.css — R11 monochrome design language
+ * ii Design Language — R11 monochrome (black / white / grey + 4-color status dot)
+ * Source: visual-style-docs/design-tokens.md
  */
 
 /* ── Reset ──────────────────────────────────────── */
@@ -12,56 +13,72 @@
 
 /* ── Design Tokens ──────────────────────────────── */
 :root {
-  /* Background layers */
+  /* Background layers (grey-scale only) */
   --bg:              #ffffff;
   --bg-raised:       #fafafa;
   --surface:         #f8f9fa;
+  --surface-2:       #f1f3f5;
   --surface-hover:   rgba(0, 0, 0, 0.04);
-  --surface-active:  rgba(0, 0, 0, 0.07);
+  --surface-active:  rgba(0, 0, 0, 0.06);
+  --bg-overlay:      rgba(0, 0, 0, 0.35);
 
   /* Foreground */
   --fg:              #000000;
-  --fg-muted:        #666666;
-  --fg-subtle:       #aaaaaa;
+  --fg-muted:        #6b6b6b;
+  --fg-subtle:       #9c9c9c;
+  --fg-dim:          #aaaaaa;
+  --fg-on-dark:      #ffffff;
 
-  /* Borders */
+  /* Borders — 3 tiers */
+  --border-soft:     rgba(0, 0, 0, 0.08);
   --border:          rgba(0, 0, 0, 0.10);
-  --border-soft:     rgba(0, 0, 0, 0.05);
+  --border-strong:   rgba(0, 0, 0, 0.16);
+  --border-focus:    #000000;
 
-  /* Typography */
-  --font-sans:  'Inter', 'Noto Sans TC', system-ui, sans-serif;
-  --font-label: 'Space Grotesk', 'Inter', sans-serif;
-  --font-mono:  'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+  /* Typography — Sans + Mono dual stack */
+  --font-sans:  'Inter', 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', system-ui, sans-serif;
+  --font-label: 'Space Grotesk', 'JetBrains Mono', 'Cascadia Code', monospace;
+  --font-mono:  'JetBrains Mono', 'Cascadia Code', 'SF Mono', 'Consolas', monospace;
 
-  /* Radius */
+  /* Font sizes — compact scale */
+  --text-micro: 9px;
+  --text-xs:    10px;
+  --text-sm:    11px;
+  --text-base:  12px;
+  --text-md:    13px;
+  --text-lg:    14px;
+  --text-xl:    16px;
+  --letter-uppercase: 0.08em;
+
+  /* Radius — 3 tiers + pill */
   --radius-sm:   4px;
-  --radius:      8px;
-  --radius-md:   10px;
-  --radius-lg:   16px;
+  --radius:      10px;
+  --radius-lg:   12px;
+  --radius-pill: 9999px;
 
-  /* Spacing */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --gap-main: 30px;
+  /* Spacing — 4 px grid */
+  --gap-1: 4px;
+  --gap-2: 8px;
+  --gap-3: 12px;
+  --gap-4: 16px;
+  --gap-5: 20px;
+  --gap-6: 24px;
+  --gap-7: 30px;
 
   /* Transitions */
-  --trans-fast:   0.15s ease;
-  --trans-normal: 0.22s ease;
+  --t-fast: 0.15s ease;
+  --t-base: 0.2s ease;
 
   /* Shadows */
-  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-card:  0 1px 4px rgba(0, 0, 0, 0.06);
+  --shadow-modal: 0 4px 24px rgba(0, 0, 0, 0.18);
 
   /* Glass */
-  --glass-bg:     rgba(255, 255, 255, 0.70);
+  --glass-bg:     rgba(255, 255, 255, 0.78);
   --glass-blur:   blur(20px);
-  --glass-border: 0.5px solid rgba(0, 0, 0, 0.10);
 
   /* Layout */
-  --sidebar-width: 280px;
+  --sidebar-width: 260px;
 }
 
 /* ── Base ───────────────────────────────────────── */
@@ -70,7 +87,7 @@ html, body, #app {
   height: 100%;
   overflow: hidden;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--text-md);
   line-height: 1.5;
   color: var(--fg);
   background: var(--bg);
@@ -78,20 +95,30 @@ html, body, #app {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 /* ── Scrollbar (Chromium) ───────────────────────── */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border);
-  border-radius: 3px;
+  border-radius: var(--radius-pill);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--fg-subtle);
+  background: var(--border-strong);
 }
 
 /* ══════════════════════════════════════════════════
@@ -99,7 +126,7 @@ html, body, #app {
    ══════════════════════════════════════════════════ */
 
 .md-body {
-  font-size: 15px;
+  font-size: var(--text-lg);
   line-height: 1.75;
   color: var(--fg);
   word-wrap: break-word;
@@ -122,12 +149,12 @@ html, body, #app {
 .md-body h1 {
   font-size: 1.75em;
   padding-bottom: 0.35em;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 0.5px solid var(--border-soft);
 }
 .md-body h2 {
   font-size: 1.4em;
   padding-bottom: 0.25em;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 0.5px solid var(--border-soft);
 }
 .md-body h3 { font-size: 1.2em; }
 .md-body h4 { font-size: 1.05em; color: var(--fg-muted); }
@@ -147,8 +174,8 @@ html, body, #app {
   color: var(--fg);
   text-decoration: underline;
   text-underline-offset: 2px;
-  text-decoration-color: var(--fg-subtle);
-  transition: text-decoration-color var(--trans-fast);
+  text-decoration-color: var(--fg-dim);
+  transition: text-decoration-color var(--t-fast);
 }
 .md-body a:hover {
   text-decoration-color: var(--fg);
@@ -197,16 +224,16 @@ html, body, #app {
   margin-bottom: 1em;
   background: var(--surface);
   border: 0.5px solid var(--border-soft);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   overflow-x: auto;
 }
 .md-body pre code {
   display: block;
-  padding: 16px 20px;
+  padding: var(--gap-4) var(--gap-5);
   background: none;
   border: none;
   border-radius: 0;
-  font-size: 13px;
+  font-size: var(--text-md);
   line-height: 1.6;
   white-space: pre;
 }
@@ -221,17 +248,17 @@ html, body, #app {
 .md-body thead th {
   background: var(--surface);
   font-family: var(--font-label);
-  font-size: 0.8em;
+  font-size: var(--text-micro);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-uppercase);
   color: var(--fg-muted);
-  padding: 10px 14px;
+  padding: var(--gap-3) var(--gap-4);
   text-align: left;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
 }
 .md-body tbody td {
-  padding: 10px 14px;
+  padding: var(--gap-3) var(--gap-4);
   border-bottom: 0.5px solid var(--border-soft);
   vertical-align: top;
 }
@@ -242,8 +269,8 @@ html, body, #app {
 /* ── Blockquote ─────────────────────────────────── */
 .md-body blockquote {
   margin: 0 0 1em 0;
-  padding: 12px 20px;
-  border-left: 3px solid var(--border);
+  padding: var(--gap-3) var(--gap-5);
+  border-left: 2px solid var(--border);
   background: var(--surface);
   border-radius: 0 var(--radius) var(--radius) 0;
   color: var(--fg-muted);
@@ -255,7 +282,7 @@ html, body, #app {
 /* ── Horizontal Rule ────────────────────────────── */
 .md-body hr {
   border: none;
-  border-top: 1px solid var(--border-soft);
+  border-top: 0.5px solid var(--border-soft);
   margin: 2em 0;
 }
 
@@ -263,9 +290,9 @@ html, body, #app {
 .md-body img {
   max-width: 100%;
   height: auto;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   border: 0.5px solid var(--border-soft);
-  margin: 8px 0;
+  margin: var(--gap-2) 0;
 }
 
 /* ── Misc ───────────────────────────────────────── */

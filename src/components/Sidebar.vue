@@ -126,27 +126,27 @@ function formatSize(bytes: number): string {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 16px 0;
+  padding: var(--gap-4) var(--gap-4) 0;
 }
 
 .sidebar-title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--gap-2);
 }
 
 .sidebar-title .label {
   font-family: var(--font-label);
-  font-size: 11px;
+  font-size: var(--text-micro);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--letter-uppercase);
   color: var(--fg-muted);
 }
 
 .sidebar-title .count {
   font-family: var(--font-label);
-  font-size: 11px;
+  font-size: var(--text-xs);
   color: var(--fg-subtle);
 }
 
@@ -156,56 +156,56 @@ function formatSize(bytes: number): string {
   justify-content: center;
   width: 28px;
   height: 28px;
-  border: none;
+  border: 0.5px solid transparent;
   border-radius: var(--radius);
   background: transparent;
-  color: var(--fg-muted);
+  color: var(--fg-subtle);
   cursor: pointer;
-  transition: all var(--trans-fast);
+  transition: background-color var(--t-fast), border-color var(--t-fast), color var(--t-fast);
 }
 .btn-icon:hover {
   background: var(--surface-hover);
+  border-color: var(--border-soft);
   color: var(--fg);
 }
 
 .sidebar-search {
-  padding: 12px 16px;
+  padding: var(--gap-3) var(--gap-4);
 }
 
 .sidebar-search input {
   width: 100%;
-  padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.03);
-  border: 0.5px solid var(--border-soft);
+  padding: var(--gap-2) var(--gap-3);
+  background: var(--bg);
+  border: 0.5px solid var(--border);
   border-radius: var(--radius);
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: var(--text-base);
   color: var(--fg);
   outline: none;
-  transition: border-color var(--trans-fast);
+  transition: border-color var(--t-fast);
 }
 .sidebar-search input::placeholder {
   color: var(--fg-subtle);
 }
 .sidebar-search input:focus {
-  border-color: var(--border);
-  background: rgba(0, 0, 0, 0.02);
+  border-color: var(--border-focus);
 }
 
 .file-list {
   flex: 1;
   overflow-y: auto;
-  padding: 0 8px 16px;
+  padding: 0 var(--gap-2) var(--gap-4);
 }
 
 .file-item {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  padding: 7px 10px;
+  padding: 7px var(--gap-3);
   border-radius: var(--radius);
   cursor: pointer;
-  transition: background var(--trans-fast);
+  transition: background-color var(--t-fast), border-color var(--t-fast);
   border: 0.5px solid transparent;
   position: relative;
 }
@@ -220,7 +220,8 @@ function formatSize(bytes: number): string {
 }
 
 .file-dir {
-  font-size: 10px;
+  font-family: var(--font-label);
+  font-size: var(--text-micro);
   color: var(--fg-subtle);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -229,7 +230,7 @@ function formatSize(bytes: number): string {
 }
 
 .file-name {
-  font-size: 12px;
+  font-size: var(--text-base);
   font-weight: 500;
   color: var(--fg);
   overflow: hidden;
@@ -243,16 +244,16 @@ function formatSize(bytes: number): string {
 }
 
 .file-size {
-  font-family: var(--font-mono);
-  font-size: 10px;
+  font-family: var(--font-label);
+  font-size: var(--text-micro);
   color: var(--fg-subtle);
   line-height: 1.3;
 }
 
 .empty-state {
-  padding: 24px 16px;
+  padding: var(--gap-6) var(--gap-4);
   text-align: center;
-  font-size: 12px;
+  font-size: var(--text-base);
   color: var(--fg-subtle);
 }
 </style>

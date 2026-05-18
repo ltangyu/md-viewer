@@ -178,8 +178,8 @@ function displayName(file: MdFileEntry): string {
 .content-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 10px 24px;
+  gap: var(--gap-4);
+  padding: var(--gap-3) var(--gap-6);
   border-bottom: 0.5px solid var(--border-soft);
   background: var(--bg);
   flex-shrink: 0;
@@ -189,7 +189,7 @@ function displayName(file: MdFileEntry): string {
 .nav-controls {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--gap-1);
   flex-shrink: 0;
 }
 
@@ -199,17 +199,17 @@ function displayName(file: MdFileEntry): string {
   justify-content: center;
   width: 28px;
   height: 28px;
-  border: 0.5px solid var(--border-soft);
+  border: 0.5px solid var(--border);
   border-radius: var(--radius);
-  background: transparent;
+  background: var(--bg);
   color: var(--fg-muted);
   cursor: pointer;
-  transition: all var(--trans-fast);
+  transition: background-color var(--t-fast), border-color var(--t-fast), color var(--t-fast);
 }
 .nav-btn:hover:not(:disabled) {
   background: var(--surface-hover);
   color: var(--fg);
-  border-color: var(--border);
+  border-color: var(--border-strong);
 }
 .nav-btn:disabled {
   opacity: 0.3;
@@ -218,7 +218,7 @@ function displayName(file: MdFileEntry): string {
 
 .nav-counter {
   font-family: var(--font-label);
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--fg-subtle);
   min-width: 52px;
   text-align: center;
@@ -226,7 +226,8 @@ function displayName(file: MdFileEntry): string {
 }
 
 .file-path {
-  font-size: 12px;
+  font-family: var(--font-label);
+  font-size: var(--text-sm);
   color: var(--fg-muted);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -238,7 +239,7 @@ function displayName(file: MdFileEntry): string {
 .content-body {
   flex: 1;
   overflow-y: auto;
-  padding: 30px 40px;
+  padding: var(--gap-7) 40px;
   max-width: 100%;
 }
 
@@ -254,14 +255,14 @@ function displayName(file: MdFileEntry): string {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: var(--text-md);
   color: var(--fg-subtle);
 }
 
 .loading-overlay {
   position: absolute;
   top: 44px;
-  right: 16px;
+  right: var(--gap-4);
   z-index: 10;
 }
 
@@ -271,7 +272,7 @@ function displayName(file: MdFileEntry): string {
   height: 6px;
   border-radius: 50%;
   background: var(--fg-subtle);
-  animation: pulse 1s ease-in-out infinite;
+  animation: pulse 1.2s ease-in-out infinite;
 }
 
 @keyframes pulse {
@@ -286,6 +287,6 @@ function displayName(file: MdFileEntry): string {
 }
 :deep(.error-hint) {
   color: #E53935;
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 </style>

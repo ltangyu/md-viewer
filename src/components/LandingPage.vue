@@ -102,77 +102,78 @@ async function openDirectory(dir: string) {
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: var(--bg);
+  background: var(--bg-raised);
 }
 
 .landing-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: var(--gap-3);
   padding: 48px 56px;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: var(--glass-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
   text-align: center;
   max-width: 380px;
 }
 
 .landing-icon {
   color: var(--fg-subtle);
-  margin-bottom: 4px;
+  margin-bottom: var(--gap-1);
 }
 
 .landing-title {
   font-family: var(--font-label);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--fg);
 }
 
 .landing-subtitle {
-  font-size: 13px;
+  font-family: var(--font-label);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-uppercase);
   color: var(--fg-muted);
-  margin-bottom: 12px;
+  margin-bottom: var(--gap-3);
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 28px;
+  gap: var(--gap-2);
+  padding: var(--gap-2) var(--gap-6);
   background: var(--fg);
-  color: var(--bg);
+  color: var(--fg-on-dark);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--text-md);
+  font-weight: 500;
   cursor: pointer;
-  transition: opacity var(--trans-fast);
+  transition: background-color var(--t-fast);
 }
 .btn-primary:hover:not(:disabled) {
-  opacity: 0.85;
+  background: #1a1a1a;
 }
 .btn-primary:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 .btn-ghost {
-  padding: 6px 16px;
+  padding: 6px var(--gap-4);
   background: none;
   border: 0.5px solid var(--border);
   border-radius: var(--radius);
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: var(--text-base);
   color: var(--fg-muted);
   cursor: pointer;
-  transition: all var(--trans-fast);
+  transition: background-color var(--t-fast), border-color var(--t-fast), color var(--t-fast);
   max-width: 260px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -180,12 +181,13 @@ async function openDirectory(dir: string) {
 }
 .btn-ghost:hover {
   background: var(--surface-hover);
+  border-color: var(--border-strong);
   color: var(--fg);
 }
 
 .error-msg {
-  font-size: 12px;
+  font-size: var(--text-base);
   color: #E53935;
-  margin-top: 4px;
+  margin-top: var(--gap-1);
 }
 </style>

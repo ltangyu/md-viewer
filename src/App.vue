@@ -4,6 +4,7 @@ import { invoke } from '@tauri-apps/api/core'
 import { listen } from '@tauri-apps/api/event'
 import type { MdFileEntry, ViewState } from './types'
 import { scanMdFiles, saveLastDir } from './composables/useFileSystem'
+import TitleBar from './components/TitleBar.vue'
 import LandingPage from './components/LandingPage.vue'
 import FileBrowser from './components/FileBrowser.vue'
 
@@ -66,16 +67,37 @@ onMounted(async () => {
 </script>
 
 <template>
-  <LandingPage
-    v-if="view === 'landing'"
-    @folder-opened="handleFolderOpened"
-  />
-  <FileBrowser
-    v-else
-    :files="files"
-    :current-dir="currentDir"
-    :initial-file-path="initialFilePath"
-    @change-folder="handleChangeFolder"
-    @folder-opened="handleFolderOpened"
-  />
+  <div class="app-frame">
+    <TitleBar />
+    <div class="app-body">
+      <LandingPage
+        v-if="view === 'landing'"
+        @folder-opened="handleFolderOpened"
+      />
+      <FileBrowser
+        v-else
+        :files="files"
+        :current-dir="currentDir"
+        :initial-file-path="initialFilePath"
+        @change-folder="handleChangeFolder"
+        @folder-opened="handleFolderOpened"
+      />
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.app-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.app-body {
+  flex: 1;
+  overflow: hidden;
+}
+</style>

@@ -79,6 +79,8 @@
 
   /* Layout */
   --sidebar-width: 260px;
+  --titlebar-h: 34px;
+  --window-radius: 16px;
 }
 
 /* ── Base ───────────────────────────────────────── */

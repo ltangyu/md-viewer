@@ -79,13 +79,12 @@ onUnmounted(() => {
   justify-content: space-between;
   height: var(--titlebar-h);
   padding-left: var(--gap-4);
-  background: var(--bg);
+  background: var(--bg-raised);
   border-bottom: 0.5px solid var(--border-soft);
   flex-shrink: 0;
   user-select: none;
   -webkit-user-select: none;
-  /* Top corners match the window radius */
-  border-radius: var(--window-radius) var(--window-radius) 0 0;
+  /* Top corners are already clipped by the parent .shell — no radius needed here */
 }
 
 .titlebar-title {

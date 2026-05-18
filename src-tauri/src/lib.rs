@@ -133,87 +133,6 @@ fn is_md_file_arg(arg: &str) -> bool {
             .unwrap_or(false)
 }
 
-/* ── Windows: rounded window corners ──────────── */
-// Strategy:
-// 1. Windows 11 (build 22000+): DwmSetWindowAttribute with DWMWA_WINDOW_CORNER_PREFERENCE
-//    -> smooth anti-aliased rounded corners + native shadow
-// 2. Windows 10: SetWindowRgn with CreateRoundRectRgn
-//    -> aliased but visible rounded corners (DWM corner API is no-op on Win10)
-
-#[cfg(target_os = "windows")]
-mod win_corners {
-    use std::ffi::c_void;
-
-    #[repr(C)]
-    struct RECT { left: i32, top: i32, right: i32, bottom: i32 }
-
-    #[repr(C)]
-    struct MARGINS { cx_left: i32, cx_right: i32, cy_top: i32, cy_bottom: i32 }
-
-    #[link(name = "dwmapi")]
-    extern "system" {
-        fn DwmSetWindowAttribute(hwnd: isize, attr: u32, value: *const c_void, size: u32) -> i32;
-        fn DwmExtendFrameIntoClientArea(hwnd: isize, pMarInset: *const MARGINS) -> i32;
-    }
-
-    #[link(name = "user32")]
-    extern "system" {
-        fn GetClientRect(hwnd: isize, lpRect: *mut RECT) -> i32;
-        fn SetWindowRgn(hwnd: isize, hrgn: *mut c_void, b_redraw: i32) -> i32;
-    }
-
-    #[link(name = "gdi32")]
-    extern "system" {
-        fn CreateRoundRectRgn(
-            x1: i32, y1: i32, x2: i32, y2: i32, w: i32, h: i32,
-        ) -> *mut c_void;
-    }
-
-    const DWMWA_WINDOW_CORNER_PREFERENCE: u32 = 33;
-    const DWMWCP_ROUND: u32 = 2;
-    const CORNER_RADIUS: i32 = 16;
-
-    /// Enable DWM-drawn shadow even for borderless / regioned windows.
-    /// Margins of {0,0,1,0} extends the frame just 1px into the top of the
-    /// client area — enough for DWM to draw a shadow around the whole window
-    /// without visually affecting our custom title bar.
-    fn enable_shadow(hwnd: isize) {
-        unsafe {
-            let m = MARGINS { cx_left: 0, cx_right: 0, cy_top: 1, cy_bottom: 0 };
-            DwmExtendFrameIntoClientArea(hwnd, &m);
-        }
-    }
-
-    pub fn apply(hwnd: isize) {
-        unsafe {
-            // 1) Try Windows 11 native rounded corners (preserves shadow automatically)
-            let pref = DWMWCP_ROUND;
-            let hr = DwmSetWindowAttribute(
-                hwnd,
-                DWMWA_WINDOW_CORNER_PREFERENCE,
-                &pref as *const u32 as *const c_void,
-                std::mem::size_of::<u32>() as u32,
-            );
-
-            if hr != 0 {
-                // 2) Windows 10 fallback: SetWindowRgn for rounded corners
-                let mut rect = RECT { left: 0, top: 0, right: 0, bottom: 0 };
-                GetClientRect(hwnd, &mut rect);
-                let region = CreateRoundRectRgn(
-                    0, 0,
-                    rect.right + 1, rect.bottom + 1,
-                    CORNER_RADIUS * 2 + 1, CORNER_RADIUS * 2 + 1,
-                );
-                if !region.is_null() {
-                    SetWindowRgn(hwnd, region, 1);
-                }
-                // SetWindowRgn strips the DWM shadow — extend the frame to restore it
-                enable_shadow(hwnd);
-            }
-        }
-    }
-}
-
 /* ── App Entry ──────────────────────────────────── */
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -233,28 +152,6 @@ pub fn run() {
                 }
             }
         }))
-        .setup(|app| {
-            #[cfg(target_os = "windows")]
-            {
-                if let Some(window) = app.get_webview_window("main") {
-                    if let Ok(hwnd) = window.hwnd() {
-                        let h = hwnd.0 as isize;
-                        win_corners::apply(h);
-
-                        // Re-apply on resize so the rounded region tracks the window size
-                        let win_clone = window.clone();
-                        window.on_window_event(move |event| {
-                            if let tauri::WindowEvent::Resized(_) = event {
-                                if let Ok(hwnd) = win_clone.hwnd() {
-                                    win_corners::apply(hwnd.0 as isize);
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-            Ok(())
-        })
         .invoke_handler(tauri::generate_handler![
             scan_md_files,
             read_text_file,

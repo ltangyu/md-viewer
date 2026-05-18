@@ -2,11 +2,21 @@
 import { ref, onMounted } from 'vue'
 import { invoke } from '@tauri-apps/api/core'
 import { listen } from '@tauri-apps/api/event'
+import { getCurrentWindow } from '@tauri-apps/api/window'
 import type { MdFileEntry, ViewState } from './types'
 import { scanMdFiles, saveLastDir } from './composables/useFileSystem'
 import TitleBar from './components/TitleBar.vue'
 import LandingPage from './components/LandingPage.vue'
 import FileBrowser from './components/FileBrowser.vue'
+
+const win = getCurrentWindow()
+
+/** Drag the window from the transparent outer padding ring. */
+async function onPaddingMouseDown(e: MouseEvent) {
+  if (e.button !== 0) return
+  if (e.target !== e.currentTarget) return
+  await win.startDragging()
+}
 
 const view = ref<ViewState>('landing')
 const files = ref<MdFileEntry[]>([])
@@ -67,36 +77,48 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="app-frame">
-    <TitleBar />
-    <div class="app-body">
-      <LandingPage
-        v-if="view === 'landing'"
-        @folder-opened="handleFolderOpened"
-      />
-      <FileBrowser
-        v-else
-        :files="files"
-        :current-dir="currentDir"
-        :initial-file-path="initialFilePath"
-        @change-folder="handleChangeFolder"
-        @folder-opened="handleFolderOpened"
-      />
+  <div class="shell-padding" @mousedown="onPaddingMouseDown" data-tauri-drag-region>
+    <div class="shell">
+      <TitleBar />
+      <div class="shell-body">
+        <LandingPage
+          v-if="view === 'landing'"
+          @folder-opened="handleFolderOpened"
+        />
+        <FileBrowser
+          v-else
+          :files="files"
+          :current-dir="currentDir"
+          :initial-file-path="initialFilePath"
+          @change-folder="handleChangeFolder"
+          @folder-opened="handleFolderOpened"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.app-frame {
-  width: 100%;
+/* Outer ring — fully transparent so the inner shell's box-shadow can fade out. */
+.shell-padding {
   height: 100%;
+  padding: var(--shell-padding);
+  background: transparent;
+  overflow: hidden;
+}
+
+/* The visible card — rounded corners + layered drop shadow. */
+.shell {
+  height: 100%;
+  background: var(--bg);
+  border-radius: var(--window-radius);
+  box-shadow: var(--shadow-shell);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--bg);
 }
 
-.app-body {
+.shell-body {
   flex: 1;
   overflow: hidden;
 }

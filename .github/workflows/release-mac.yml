@@ -1,0 +1,72 @@
+# Build macOS .dmg + .app.tar.gz for both Intel and Apple Silicon, and attach
+# them to the GitHub Release for the tag specified (defaults to the tag that
+# triggered the workflow, or "v0.1.0" when manually dispatched).
+#
+# Trigger this manually from the Actions tab → "Release (macOS)" → "Run workflow",
+# or push a new `v*` tag.
+
+name: Release (macOS)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag to attach macOS assets to (e.g. v0.1.0)'
+        required: true
+        default: 'v0.1.0'
+
+jobs:
+  build:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            arch_label: AppleSilicon
+            runner: macos-14         # ARM-native runner (Apple Silicon)
+          - target: x86_64-apple-darwin
+            arch_label: Intel
+            runner: macos-13         # Intel runner
+
+    runs-on: ${{ matrix.runner }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'
+
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Rust build cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build & attach to release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # When triggered by tag push, use the tag from the ref.
+          # When dispatched manually, use the input.
+          tagName: ${{ github.event.inputs.tag || github.ref_name }}
+          releaseName: 'MD Viewer ${{ github.event.inputs.tag || github.ref_name }}'
+          releaseDraft: false
+          prerelease: false
+          args: --target ${{ matrix.target }} --bundles app,dmg

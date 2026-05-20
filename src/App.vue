@@ -108,9 +108,10 @@ onMounted(async () => {
 }
 
 /* The visible card — rounded corners + layered drop shadow. */
+/* PDF §1 SURFACES: shell uses #fafafa (--bg-raised); inner content blocks use #ffffff. */
 .shell {
   height: 100%;
-  background: var(--bg);
+  background: var(--bg-raised);
   border-radius: var(--window-radius);
   box-shadow: var(--shadow-shell);
   display: flex;

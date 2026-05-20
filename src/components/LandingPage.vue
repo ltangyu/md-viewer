@@ -125,9 +125,9 @@ async function openDirectory(dir: string) {
 }
 
 .landing-title {
-  font-family: var(--font-label);
-  font-size: 26px;
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-size: 24px;            /* Hero size — outside UI ladder, matches sibling apps */
+  font-weight: 600;           /* PDF §3: weights only 400 / 500 / 600 */
   letter-spacing: -0.02em;
   color: var(--fg);
 }
@@ -145,7 +145,7 @@ async function openDirectory(dir: string) {
   display: inline-flex;
   align-items: center;
   gap: var(--gap-2);
-  padding: var(--gap-2) var(--gap-6);
+  padding: var(--gap-2) var(--gap-4);  /* PDF §4: button 8 × 16 */
   background: var(--fg);
   color: var(--fg-on-dark);
   border: none;
@@ -165,7 +165,7 @@ async function openDirectory(dir: string) {
 }
 
 .btn-ghost {
-  padding: 6px var(--gap-4);
+  padding: var(--gap-2) var(--gap-4);  /* PDF §0 R04: no odd pixels, 4 px multiples only */
   background: none;
   border: 0.5px solid var(--border);
   border-radius: var(--radius);

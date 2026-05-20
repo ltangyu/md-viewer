@@ -201,8 +201,8 @@ function formatSize(bytes: number): string {
 .file-item {
   display: flex;
   flex-direction: column;
-  gap: 1px;
-  padding: 7px var(--gap-3);
+  gap: 2px;                              /* PDF §0 R04: 4 px multiples only, was 1 */
+  padding: var(--gap-2) var(--gap-3);    /* PDF §0 R04: 8 × 12, was 7 × 12 */
   border-radius: var(--radius);
   cursor: pointer;
   transition: background-color var(--t-fast), border-color var(--t-fast);

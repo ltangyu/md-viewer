@@ -29,8 +29,8 @@
   --fg-dim:          #aaaaaa;
   --fg-on-dark:      #ffffff;
 
-  /* Borders — 3 tiers */
-  --border-soft:     rgba(0, 0, 0, 0.08);
+  /* Borders — 3 tiers (PDF §1: subtle / medium / strong) */
+  --border-soft:     rgba(0, 0, 0, 0.05);
   --border:          rgba(0, 0, 0, 0.10);
   --border-strong:   rgba(0, 0, 0, 0.16);
   --border-focus:    #000000;
@@ -83,11 +83,11 @@
   --glass-bg:     rgba(255, 255, 255, 0.78);
   --glass-blur:   blur(20px);
 
-  /* Layout */
-  --sidebar-width: 260px;
-  --titlebar-h: 34px;
-  --window-radius: 12px;
-  --shell-padding: 24px;
+  /* Layout (PDF §4 layout dimensions) */
+  --sidebar-width: 260px;     /* MD Viewer needs wider sidebar than ii default 160 for filenames */
+  --titlebar-h:    36px;      /* PDF §4: TITLEBAR-H */
+  --window-radius: 12px;      /* = --radius-lg, PDF §5: outer window shell */
+  --shell-padding: 32px;      /* PDF §6 verify formula: (6+12-(-2))*1.6 = 32 ≤ 32 ✓ */
 }
 
 /* ── Base ───────────────────────────────────────── */
@@ -310,6 +310,6 @@ input, textarea {
 }
 .md-body mark {
   background: rgba(250, 204, 21, 0.25);
-  padding: 1px 4px;
-  border-radius: 2px;
+  padding: 0 var(--gap-1);
+  border-radius: var(--radius-sm);
 }

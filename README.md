@@ -4,6 +4,18 @@ Lightweight desktop Markdown file browser built with **Tauri v2 + Vue 3 + TypeSc
 
 Open a folder, browse all `.md` files in a sidebar, and read beautifully rendered Markdown with syntax-highlighted code blocks and inline images — no Electron, no bloat.
 
+## Download
+
+Grab a pre-built copy from the [latest release](https://github.com/ltangyu/md-viewer/releases/latest):
+
+| Asset | Size | Description |
+|-------|-----:|-------------|
+| **`MD-Viewer-v0.1.0-portable-x64.zip`** | ~2.8 MB | **綠色免安裝版** — unzip and double-click `MD-Viewer.exe`, no installer needed |
+| `MD Viewer_0.1.0_x64-setup.exe` | ~2.1 MB | NSIS installer — registers the `.md` file association |
+| `MD Viewer_0.1.0_x64_en-US.msi` | ~3.1 MB | MSI installer — for managed deployment |
+
+Requires Windows 10 (build 1803+) or Windows 11, 64-bit. Microsoft Edge WebView2 Runtime is required (pre-installed on Windows 10/11 since 2020).
+
 ![MD Viewer — file browser with rendered Markdown](screenshots/browser-view.png)
 
 ![MD Viewer — code block rendering](screenshots/code-rendering.png)
@@ -122,6 +134,18 @@ MIT
 輕量級桌面 Markdown 檔案瀏覽器，使用 **Tauri v2 + Vue 3 + TypeScript** 打造。
 
 打開資料夾，在側邊欄瀏覽所有 `.md` 檔案，閱讀經過精美渲染的 Markdown 內容 — 包含語法高亮的程式碼區塊和內嵌圖片 — 不用 Electron，無多餘開銷。
+
+## 下載
+
+從 [最新發布](https://github.com/ltangyu/md-viewer/releases/latest) 取得預先打包的版本：
+
+| 檔案 | 大小 | 說明 |
+|------|-----:|------|
+| **`MD-Viewer-v0.1.0-portable-x64.zip`** | 約 2.8 MB | **綠色免安裝版** — 解壓後雙擊 `MD-Viewer.exe` 即可使用，不需要安裝程式 |
+| `MD Viewer_0.1.0_x64-setup.exe` | 約 2.1 MB | NSIS 安裝程式 — 會註冊 `.md` 檔案關聯 |
+| `MD Viewer_0.1.0_x64_en-US.msi` | 約 3.1 MB | MSI 安裝程式 — 適用於企業統一部署 |
+
+系統需求：Windows 10（1803 以上版本）或 Windows 11，64 位元。需要 Microsoft Edge WebView2 Runtime（Windows 10/11 從 2020 年起預載）。
 
 ![MD Viewer — 檔案瀏覽與 Markdown 渲染](screenshots/browser-view.png)
 

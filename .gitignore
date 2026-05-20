@@ -29,3 +29,6 @@ app-icon.png
 
 # Demo content (for screenshots only)
 demo-content/
+
+# Release packaging staging (uploaded to GitHub Releases instead)
+release-staging/
